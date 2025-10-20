@@ -1,0 +1,22 @@
+<div class="grid grid-cols-12 h-screen">
+    <div class="col-span-6 bg-green-600 relative overflow-hidden"> <!-- thêm overflow-hidden và relative -->
+        <div class="flex transition-transform duration-700 ease-in-out h-full"
+            [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
+            <div *ngFor="let item of images" class="flex-none w-full h-full">
+                <img [src]="item.img" class="w-full h-full object-cover" />
+            </div>
+        </div>
+    </div>
+    <div class="col-span-6">
+        <div *ngIf="step === 'login'">
+            <app-login (emitRegister)="goToRegister()"></app-login>
+        </div>
+        <div *ngIf="step === 'register'">
+            <app-register (emitLogin)="goToLogin()" (emitOtp)="goToOtp($event)"></app-register>
+        </div>
+        <!-- Màn OTP -->
+        <div *ngIf ="step === 'otp'">
+            <app-opt (emitBack)="goToOtp()" [dataRegister]="dataRegister" ></app-opt>
+        </div>
+    </div>
+</div>

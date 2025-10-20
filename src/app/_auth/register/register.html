@@ -1,0 +1,133 @@
+<!-- register.component.html -->
+<div class="col-span-12 lg:col-span-6 flex items-center justify-center p-6 lg:p-12 bg-white">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl lg:text-3xl font-bold text-gray-800">Tạo tài khoản mới</h1>
+            <p class="text-gray-600 mt-2">Đăng ký để trải nghiệm dịch vụ đặt phòng homestay tốt nhất</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+            <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">
+                    Họ và tên <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="firstName" formControlName="firstName"
+                    class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition form-input placeholder-gray-400 placeholder-opacity-50"
+                    placeholder="Nhập họ của bạn" [class.border-red-500]="firstName?.invalid && firstName?.touched">
+                <div *ngIf="firstName?.invalid && firstName?.touched" class="text-red-500 text-xs mt-1">
+                    Vui lòng nhập họ và tên của bạn
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                    Email <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <input type="email" id="email" formControlName="email"
+                        class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition form-input placeholder-gray-400 placeholder-opacity-50"
+                        placeholder="your.email@example.com" [class.border-red-500]="email?.invalid && email?.touched">
+                    <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div *ngIf="email?.invalid && email?.touched" class="text-red-500 text-xs mt-1">
+                    <span *ngIf="email?.errors?.['required']">Vui lòng nhập email</span>
+                    <span *ngIf="email?.errors?.['email']">Email không hợp lệ</span>
+                </div>
+            </div>
+
+            <!-- Số điện thoại -->
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+                    Số điện thoại <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <input type="tel" id="phone" formControlName="phone"
+                        class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition form-input placeholder-gray-400 placeholder-opacity-50"
+                        placeholder="0123 456 789" [class.border-red-500]="phone?.invalid && phone?.touched">
+                    <i class="fas fa-phone absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div *ngIf="phone?.invalid && phone?.touched" class="text-red-500 text-xs mt-1">
+                    <span *ngIf="phone?.errors?.['required']">Vui lòng nhập số điện thoại</span>
+                    <span *ngIf="phone?.errors?.['pattern']">Số điện thoại không hợp lệ</span>
+                </div>
+            </div>
+
+            <!-- Mật khẩu -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    Mật khẩu <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <input [type]="hidePassword ? 'password' : 'text'" id="password" formControlName="password"
+                        class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition form-input placeholder-gray-400 placeholder-opacity-50"
+                        placeholder="Ít nhất 8 ký tự" [class.border-red-500]="password?.invalid && password?.touched">
+                    <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <button type="button"
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        (click)="togglePasswordVisibility()">
+                        <i [class]="hidePassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                    </button>
+                </div>
+                <div *ngIf="password?.invalid && password?.touched" class="text-red-500 text-xs mt-1">
+                    <span *ngIf="password?.errors?.['required']">Vui lòng nhập mật khẩu</span>
+                    <span *ngIf="password?.errors?.['minlength']">Mật khẩu phải có ít nhất 8 ký tự</span>
+                </div>
+            </div>
+
+            <!-- Xác nhận mật khẩu -->
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                    Xác nhận mật khẩu <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <input [type]="hideConfirmPassword ? 'password' : 'text'" id="confirmPassword"
+                        formControlName="confirmPassword"
+                        class="w-full px-2 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition form-input placeholder-gray-400 placeholder-opacity-50"
+                        placeholder="Nhập lại mật khẩu"
+                        [class.border-red-500]="confirmPassword?.invalid && confirmPassword?.touched">
+                    <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <button type="button"
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        (click)="toggleConfirmPasswordVisibility()">
+                        <i [class]="hideConfirmPassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+                    </button>
+                </div>
+                <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched" class="text-red-500 text-xs mt-1">
+                    <span *ngIf="confirmPassword?.errors?.['required']">Vui lòng xác nhận mật khẩu</span>
+                    <span *ngIf="confirmPassword?.errors?.['passwordMismatch']">Mật khẩu không khớp</span>
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-2">
+                <input type="checkbox" id="acceptTerms" formControlName="acceptTerms"
+                    class="mt-1 rounded border-gray-300 text-green-600 focus:ring-green-500">
+                <label for="acceptTerms" class="text-sm text-gray-700">
+                    Tôi đồng ý với <a href="#" class="text-green-600 hover:text-green-700 font-medium">Điều khoản dịch
+                        vụ</a>
+                    và <a href="#" class="text-green-600 hover:text-green-700 font-medium">Chính sách bảo mật</a>
+                </label>
+            </div>
+            <div *ngIf="acceptTerms?.invalid && acceptTerms?.touched" class="text-red-500 text-xs">
+                Vui lòng chấp nhận điều khoản
+            </div>
+
+            <button type="submit"
+                class="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 w-full text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
+                (click)="handleOtp()"
+            >
+                Đăng ký tài khoản
+            </button>
+
+            <div class="text-center pt-4">
+                <p class="text-gray-600">
+                    Đã có tài khoản?
+                    <button (click)="handleLogin()"
+                        class="text-green-600 hover:text-green-700 font-medium ml-1 cursor-pointer">
+                        Đăng nhập ngay
+                    </button>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

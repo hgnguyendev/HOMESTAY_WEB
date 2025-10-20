@@ -1,0 +1,34 @@
+<div
+    class="group relative overflow-hidden border border-gray-200 rounded-3xl bg-white text-center space-y-6 px-8 py-14 shadow-sm hover:shadow-2xl transition-all duration-500 ease-out hover:-translate-y-2 cursor-pointer">
+
+    <!-- Icon container với hiệu ứng -->
+    <div class="relative rounded-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-red-100 mx-auto group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-500 shadow-inner"
+        style="width: 80px; height: 80px;">
+        <div class="absolute inset-0 rounded-full bg-white/50 group-hover:bg-white/30 transition-colors duration-500">
+        </div>
+        <i [ngClass]="icon"
+            class="text-gradient text-red-600 text-3xl relative z-10"></i>
+    </div>
+
+    <!-- Title với hiệu ứng -->
+    <div class="relative">
+        <p class="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
+            {{title}}
+        </p>
+    </div>
+
+    <!-- Description với hiệu ứng -->
+    <div class="relative">
+        <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+            {{description}}
+        </p>
+    </div>
+
+    <!-- Decorative elements -->
+    <div
+        class="absolute top-4 right-4 w-3 h-3 rounded-full bg-orange-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+    </div>
+    <div
+        class="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-red-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300">
+    </div>
+</div>

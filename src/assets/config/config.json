@@ -1,0 +1,4 @@
+{
+  "apiEndpoint": "http://localhost:3001/api",
+  "socketIoEndpoint": "http://localhost:4000"
+}
