@@ -1,0 +1,14 @@
+<div class="mt-2">
+    <div class="grid grid-cols-3 gap-x-2 gap-y-2">
+        <div *ngFor="let item of amenities" class="flex items-center justify-between border border-gray-300 py-3 px-2 text-white rounded-xl">
+            <div>
+                <i class="text-orange-400" [class]="getAmenityInfo(item.name).icon"></i>
+                <span class="text-base text-black! ml-2"> {{getAmenityInfo(item.name).name}}</span>
+            </div>
+
+            <div>
+                <p class="text-[12px] px-2 py-1 bg-[#ccc] rounded-lg">Có sẵn</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,10 +6,12 @@ import { HomestayService } from '../../../../_services/homestay.service';
   selector: 'app-search',
   standalone: false,
   templateUrl: './search.component.html',
+  styleUrl: './search.component.scss'
 })
 export class Search {
   listSearchHomestay: any = [];
-  dataSubmit: any
+  dataSubmit: any;
+  itemHomestay: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +45,10 @@ export class Search {
     } catch (error: any) {
 
     }
+  }
+
+  handleDetails(item: any) {
+    this.itemHomestay = item;
   }
 
 

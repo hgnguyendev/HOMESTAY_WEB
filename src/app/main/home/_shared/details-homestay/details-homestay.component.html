@@ -1,0 +1,144 @@
+<div class="p-4">
+    <!-- Header -->
+    <div class="border-b border-gray-300 py-2 mb-4 flex items-center">
+        <button class="flex items-center gap-2 text-gray-700 hover:text-purple-600 transition-all duration-300 group">
+            <i
+                class="bi bi-arrow-left text-lg transform transition-transform duration-300 group-hover:-translate-x-1"></i>
+            <span class="font-medium">Quay lại</span>
+        </button>
+    </div>
+
+    <!-- Grid content -->
+    <div class="p-2 grid grid-cols-12 gap-4">
+        <div class="col-span-8">
+
+            <div class="p-4">
+                <div class="h-[300px] bg-center bg-cover rounded-xl shadow-md transition-all duration-500"
+                    [ngStyle]="{'background-image': 'url(' + selectedImage + ')'}">
+                </div>
+                <div class="flex overflow-x-auto mt-4 gap-3 pb-2">
+                    <div *ngFor="let img of dataDetails.images" (click)="selectedImage = img"
+                        class="flex-shrink-0 w-[250px] h-[140px] rounded-lg cursor-pointer border-2 transition-all duration-300 hover:scale-105"
+                        [ngStyle]="{
+        'background-image': 'url(' + img + ')',
+        'background-size': 'cover',
+        'background-position': 'center',
+        'border-color': selectedImage === img ? '#6d4ec1' : 'transparent'
+      }">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h1 class="text-3xl font-medium">{{dataDetails.roomName}}</h1>
+                <div class="w-[300px] flex items-center justify-between mt-2">
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-star-fill text-yellow-400"></i>
+                        <p>4.9 (89 đánh giá)</p>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-geo-alt"></i>
+                        <p>{{dataDetails.address}}</p>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center gap-2">
+                    <p class="bg-[#ececec] inline-block text-[12px] rounded-full px-2 py-1">Tối đa 4 khách</p>
+                    <p class="bg-[#ececec] inline-block text-[12px] rounded-full px-2 py-1">2 phòng ngủ</p>
+                    <p class="bg-[#ececec] inline-block text-[12px] rounded-full px-2 py-1">1 phòng tắm</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 rounded-full p-1 flex items-center  gap-2 w-fit mt-3">
+                <div *ngFor="let item of menuTab" (click)="activeTab = item.type"
+                    class="px-6 py-2 rounded-full cursor-pointer text-sm font-medium transition-all duration-300 select-none"
+                    [ngClass]="{
+      'bg-white text-black shadow-sm': activeTab === item.type,
+      'text-gray-700 hover:bg-white/50': activeTab !== item.type
+    }">
+                    {{ item.name }}
+                </div>
+            </div>
+
+            <div>
+                <app-overview *ngIf="activeTab === 'overview'" [description]="dataDetails.description"></app-overview>
+                <app-facilities *ngIf="activeTab === 'facilities'" [amenities]="dataDetails.amenities"></app-facilities>
+            </div>
+        </div>
+
+
+        <div class="col-span-4 rounded-xl p-4 ">
+            <div class="">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Đặt Phòng Khách Sạn</h2>
+
+                <form name="bookingForm" novalidate>
+                    <div class="mb-4 flex items-center justify-between">
+                        <div>
+                            <p><span class="text-xl font-bold">{{ dataDetails.price |
+                                    currency:'VND':'symbol':'1.0-0':'vi-VN' }}</span>/<span>đêm</span></p>
+
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1">
+                                <i class="bi bi-star-fill text-yellow-400"></i>
+                                <p>4.9 (89 đánh giá)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ngày đặt -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="checkInDate">
+                            Ngày nhận phòng
+                        </label>
+                        <input id="checkInDate" type="date" (change)="updateTotalPrice()" [(ngModel)]="checkInDate" name="checkInDate"
+                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+                    </div>
+
+                    <!-- Ngày trả -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="checkOutDate">
+                            Ngày trả phòng
+                        </label>
+                        <input id="checkOutDate" type="date"  (change)="updateTotalPrice()" [(ngModel)]="checkOutDate" name="checkOutDate"
+                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+                    </div>
+
+                    <!-- Số lượng người -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="guests">
+                            Số lượng người
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="bi bi-people text-gray-600"></i>
+                            </div>
+                            <input id="guests" type="number" [(ngModel)]="guests" name="guests"
+                                class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Số người" min="1" max="10" required>
+                        </div>
+                    </div>
+
+                    <!-- Tổng cộng -->
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <div class="text-sm text-gray-500 mt-1">
+                            {{totalNights()}} đêm x {{dataDetails.price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700 font-medium">Tổng cộng:</span>
+                            <span class="text-2xl font-bold text-blue-600"> {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0':'vi-VN' }}</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Nút đặt phòng -->
+                    <button type="submit" ng-click="submitBooking()" ng-disabled="bookingForm.$invalid"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer" (click)="handleBookingHomestay()">
+                        <i class="fas fa-check-circle mr-2"></i>Xác nhận đặt phòng
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
