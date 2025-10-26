@@ -20,6 +20,7 @@ export class Home {
     checkIn: '',
     checkOut: '',
     guests: 2,
+    price: 0,
     limit: 10,
     skip: 0
   };

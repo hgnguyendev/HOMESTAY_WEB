@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../_services/users.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ModalInfor } from './components/modal-infor/modal-infor.component';
+
 
 @Component({
   selector: 'app-header',
@@ -9,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class Header {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _userService: UserService, private _nzModal: NzModalService) { }
 
   navigator = [
     { id: 1, name: 'Trang chủ', url: 'home', isActive: false },
@@ -28,5 +32,23 @@ export class Header {
       isActive: item.url === url,
     }));
     this.router.navigate([`${url}`]).then();
+  }
+
+  handleInfo() {
+    const modalRef = this._nzModal.create({
+      nzWidth: '800px',
+      nzTitle: 'Thông tin của bạn',
+      nzContent: ModalInfor,
+      nzFooter: null
+    })
+  }
+
+  async handleLogout() {
+    try {
+      await this._userService.logout();
+      this.router.navigateByUrl('/auth').then();
+    } catch (error: any) {
+      alert('Đăng xuất thất bại');
+    }
   }
 }

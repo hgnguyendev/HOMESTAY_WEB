@@ -38,6 +38,10 @@ export class UserService {
         return this._baseService.post(`${AppConfig.settings.apiEndpoint}/users/auth/confirm-email`, { email, otp });
     }
 
+    async editUser(data:any){
+        return this._baseService.put(`${AppConfig.settings.apiEndpoint}/users/edit-user`,data);
+    }
+
     async changePassWord(oldPassWord: string, newPassWord: string) {
         const user = this.auth.currentUser
         console.log(user)
