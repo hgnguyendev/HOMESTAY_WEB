@@ -51,5 +51,9 @@ export class Search {
     this.itemHomestay = item;
   }
 
+  handleCloseDetails(event: any) {
+    this.itemHomestay = event;
+  }
+
 
 }

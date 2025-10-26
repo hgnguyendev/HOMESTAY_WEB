@@ -20,7 +20,6 @@ export class Home {
     checkIn: '',
     checkOut: '',
     guests: 2,
-    price: 0,
     limit: 10,
     skip: 0
   };
@@ -98,13 +97,8 @@ export class Home {
       alert('Vui lòng nhập địa điểm!');
       return;
     }
-
-    // Xử lý tìm kiếm - có thể gọi service ở đây
     console.log('Search data:', this.searchData);
     this.router.navigate(['/home/search'], { queryParams: { q: JSON.stringify(this.searchData) } })
-
-    // Hiển thị thông tin tìm kiếm
-    alert(`Đang tìm kiếm:\n\nĐịa điểm: ${this.searchData.address}\nNgày nhận: ${this.searchData.checkIn}\nNgày trả: ${this.searchData.checkOut}\nSố khách: ${this.searchData.guests}`);
   }
 
 }

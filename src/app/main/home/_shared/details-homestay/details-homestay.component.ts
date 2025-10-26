@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SwalService } from '../../../../_services/swal.service';
 import { UserService } from '../../../../_services/users.service';
 import { HomestayBookedService } from '../../../../_services/homestay_booked.service';
@@ -19,6 +19,8 @@ export class DetailsHomestay {
   user_name: string = '';
   user_email: string = '';
   user_phone: string = '';
+
+  @Output() emitCloseDetails = new EventEmitter<null>();
 
 
   constructor(
@@ -89,6 +91,10 @@ export class DetailsHomestay {
     } catch (error: any) {
       this._swalService.error('Đặt phòng homestay chưa thành công');
     }
+  }
+
+  handleCloseDetails() {
+     this.emitCloseDetails.emit(null);
   }
 
 

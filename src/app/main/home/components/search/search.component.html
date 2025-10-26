@@ -7,9 +7,8 @@
     </div>
 </div>
 
-<!-- overlay-wrapper.component.html -->
 <div class="fixed inset-0 bg-black/40 flex justify-end z-50 backdrop-blur-sm" *ngIf="itemHomestay">
     <div class="bg-white w-[1200px] h-full shadow-2xl animate-slideInSlow" (click)="$event.stopPropagation()">
-        <app-details-homestay [dataDetails]="itemHomestay"></app-details-homestay>
+        <app-details-homestay [dataDetails]="itemHomestay" (emitCloseDetails)="handleCloseDetails($event)"></app-details-homestay>
     </div>
 </div>
