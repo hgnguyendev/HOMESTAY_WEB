@@ -17,9 +17,10 @@ export class Home {
   ]
   searchData = {
     address: '',
-    checkIn: '',
-    checkOut: '',
+    startDate: '',
+    endDate: '',
     guests: 2,
+    price: '',
     limit: 10,
     skip: 0
   };
@@ -31,13 +32,10 @@ export class Home {
     return `${year}-${month}-${day}`;
   }
 
-
   constructor(
     private _userService: UserService,
     private router: Router,
   ) { }
-
-
 
   currentIndex = 0;
   intervalId: any;
@@ -47,9 +45,8 @@ export class Home {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
-    this.searchData.checkIn = this.formatDate(today);
-    this.searchData.checkOut = this.formatDate(tomorrow);
+    this.searchData.startDate = this.formatDate(today);
+    this.searchData.endDate = this.formatDate(tomorrow);
   }
 
   ngOnDestroy() {
@@ -63,8 +60,6 @@ export class Home {
       this.currentIndex = (this.currentIndex + 1) % this.bannerImages.length;
     }, 5000);
   }
-
-
 
   async handleLogout() {
     try {
@@ -93,11 +88,6 @@ export class Home {
 
 
   onSubmit() {
-    if (!this.searchData.address) {
-      alert('Vui lòng nhập địa điểm!');
-      return;
-    }
-    console.log('Search data:', this.searchData);
     this.router.navigate(['/home/search'], { queryParams: { q: JSON.stringify(this.searchData) } })
   }
 
