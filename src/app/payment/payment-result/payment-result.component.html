@@ -1,0 +1,33 @@
+<div class="min-h-screen flex flex-col justify-center items-center bg-gray-50 p-6">
+    <div class="bg-white shadow rounded-lg p-8 max-w-md w-full text-center">
+        <div *ngIf="success" class="mb-6">
+            <svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <h2 class="text-2xl font-bold text-green-500 mt-4">Thanh toán thành công!</h2>
+        </div>
+
+        <div *ngIf="!success" class="mb-6">
+            <svg class="mx-auto h-16 w-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <h2 class="text-2xl font-bold text-red-500 mt-4">Thanh toán thất bại</h2>
+        </div>
+
+        <div class="mt-4 space-y-2 text-left">
+            <p *ngIf="amount !== null"><span class="font-medium">Số tiền: </span><span class="text-gray-700">{{ amount |
+                    number:'1.0-0' }} ₫</span></p>
+            <p *ngIf="txnRef"><span class="font-medium">Mã giao dịch: </span><span class="text-gray-700">{{ txnRef
+                    }}</span></p>
+            <p *ngIf="bankCode"><span class="font-medium">Ngân hàng: </span><span class="text-gray-700">{{ bankCode
+                    }}</span></p>
+        </div>
+
+        <div class="mt-6 flex justify-center gap-2">
+            <button (click)="goHome()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded">Trang
+                chủ</button>
+            <button *ngIf="success" (click)="viewOrder()"
+                class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white! rounded">Xem chi tiết</button>
+        </div>
+    </div>
+</div>

@@ -9,8 +9,8 @@ import { AppConfig } from '../_configs/app-config';
 export class HomestayService {
     constructor(private _baseService: BaseService) { }
 
-    getAllHomestay() {
-        return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay/get-homestay`);
+    getAllHomestay(params?: any) {
+        return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay/get-homestay`, { params });
     }
 
     searchHomestay(data: any) {

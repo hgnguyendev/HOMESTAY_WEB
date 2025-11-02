@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SwalService } from '../../../../_services/swal.service';
 import { UserService } from '../../../../_services/users.service';
 import { HomestayBookedService } from '../../../../_services/homestay_booked.service';
+import { PaymentService } from '../../../../_services/payment.service';
 
 @Component({
   selector: 'app-details-homestay',
@@ -26,7 +27,8 @@ export class DetailsHomestay {
   constructor(
     private _swalService: SwalService,
     private _userService: UserService,
-    private _homestayBookedService: HomestayBookedService
+    private _homestayBookedService: HomestayBookedService,
+    private _payment: PaymentService
   ) { }
 
   totalNights(): number {
@@ -77,7 +79,19 @@ export class DetailsHomestay {
 
   async handleBookingHomestay() {
     try {
-      const payload = {
+      // const payload = {
+      //   homestay_id: this.dataDetails._id,
+      //   roomName: this.dataDetails.roomName,
+      //   check_in_date: new Date(this.checkInDate),
+      //   check_out_date: new Date(this.checkOutDate),
+      //   total_price: this.totalPrice,
+      //   total_customer: this.guests
+      // }
+
+      // await this._homestayBookedService.createHomestayBooked(payload);
+      const dataPayload = {
+        order_id: this.dataDetails._id,
+        amount: this.getTotalPrice(),
         homestay_id: this.dataDetails._id,
         roomName: this.dataDetails.roomName,
         check_in_date: new Date(this.checkInDate),
@@ -85,16 +99,16 @@ export class DetailsHomestay {
         total_price: this.totalPrice,
         total_customer: this.guests
       }
-
-      await this._homestayBookedService.createHomestayBooked(payload);
-      this._swalService.success('Đặt phòng thành công');
+      const res = await this._payment.createPayment(dataPayload);
+      console.log("create payment", res);
+      window.location.href = res;
     } catch (error: any) {
       this._swalService.error('Đặt phòng homestay chưa thành công');
     }
   }
 
   handleCloseDetails() {
-     this.emitCloseDetails.emit(null);
+    this.emitCloseDetails.emit(null);
   }
 
 

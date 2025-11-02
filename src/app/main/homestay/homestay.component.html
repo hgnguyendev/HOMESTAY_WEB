@@ -1,3 +1,176 @@
-<div class="p-6">
-    <h1>Hello Homestay</h1>
+<div class=" max-w-6xl mx-auto py-6">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">
+        Tìm kiếm homestay
+    </h2>
+
+    <form (ngSubmit)="onSearch()" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+        <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Địa chỉ</label>
+            <input type="text" [(ngModel)]="search.address" name="address" placeholder="Nhập địa chỉ..."
+                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        </div>
+
+        <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Từ ngày</label>
+            <input type="date" [(ngModel)]="search.startDate" name="startDate"
+                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        </div>
+
+        <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Đến ngày</label>
+            <input type="date" [(ngModel)]="search.endDate" name="endDate"
+                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        </div>
+
+        <div class="flex flex-col">
+            <label class="text-sm text-gray-600 mb-1">Giá (VNĐ)</label>
+            <div class="flex gap-2">
+                <input type="number" [(ngModel)]="search.minPrice" name="minPrice" placeholder="Từ"
+                    class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <input type="number" [(ngModel)]="search.maxPrice" name="maxPrice" placeholder="Đến"
+                    class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+        </div>
+
+        <div class="flex justify-end md:justify-center">
+            <button type="submit"
+                class="bg-indigo-600 text-white! font-medium rounded-lg py-2 px-6 hover:bg-indigo-700 transition w-full cursor-pointer">
+                Tìm kiếm
+            </button>
+        </div>
+    </form>
+
+
+    <div class="mt-6">
+        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <table class="w-full">
+                <thead class="bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        <th class="py-4 px-6 text-left font-semibold text-slate-700 text-sm">STT</th>
+                        <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Hình ảnh</th>
+                        <th class="py-4 px-6 text-left font-semibold text-slate-700 text-sm">Tên phòng</th>
+                        <th class="py-4 px-6 text-left font-semibold text-slate-700 text-sm">Giá Phòng</th>
+                        <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Trạng thái</th>
+                        <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Địa chỉ</th>
+                        <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    <tr *ngFor="let item of homestays; let i = index"
+                        class="hover:bg-slate-50/80 transition-colors duration-200">
+                        <td class="py-4 px-6">
+                            <span class="text-sm font-medium text-slate-900">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</span>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="flex justify-center">
+                                <img [src]="item.images[0]" alt="homestay"
+                                    class="w-14 h-14 object-cover rounded-lg shadow-sm" />
+                            </div>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="text-sm font-semibold text-slate-900">{{ item.roomName }}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Homestay</div>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="text-base font-bold text-slate-900">
+                                {{ item.price | number }}₫
+                            </div>
+                            <div class="text-xs text-slate-500">/ đêm</div>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="flex justify-center">
+                                <span [class]="getStatusClasses(item.status)"
+                                    class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium">
+                                    <span [class]="getStatusDotClasses(item.status)"
+                                        class="w-2 h-2 rounded-full mr-2"></span>
+                                    {{ item.status === 'booked' ? 'Còn phòng' : 'Hết phòng' }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="text-sm font-semibold text-slate-900">{{ item.address }}</div>
+                        </td>
+
+                        <td class="py-4 px-6">
+                            <div class="flex justify-center">
+                                <button (click)="viewDetail(item)"
+                                    class="bg-white border border-slate-300 hover:border-slate-400 text-slate-700 hover:text-slate-900 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 hover:shadow-sm cursor-pointer">
+                                    Chi tiết
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="homestays.length === 0">
+                    <tr>
+                        <td colspan="6" class="text-center py-12">
+                            <div class="flex flex-col items-center justify-center text-slate-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 mb-3" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                </svg>
+                                <p class="text-slate-600 font-medium">Không có kết quả phù hợp</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Phần phân trang -->
+        <div class="mt-6 flex items-center justify-between px-2">
+            <div class="flex items-center gap-2">
+                <button (click)="previousPage()" [disabled]="currentPage === 1"
+                    [class]="getPaginationButtonClasses(currentPage === 1)"
+                    class="flex items-center px-3 py-2 rounded-lg border text-sm font-medium cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Trước
+                </button>
+
+                <div>
+                    <p class="my-0" style="margin-bottom: 0;">{{currentPage}}</p>
+                </div>
+
+                <!-- Nút Next -->
+                <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                    [class]="getPaginationButtonClasses(currentPage === totalPages)"
+                    class="flex items-center px-3 py-2 rounded-lg border text-sm font-medium cursor-pointer">
+                    Tiếp
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Chọn số items per page -->
+            <div class="flex items-center space-x-2 text-sm text-slate-600">
+                <span>Hiển thị:</span>
+                <select (change)="onItemsPerPageChange($event)" [value]="itemsPerPage"
+                    class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <span class="ml-1">mục</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed inset-0 bg-black/40 flex justify-end z-50 backdrop-blur-sm" *ngIf="homestayDetails">
+    <div class="bg-white w-[1200px] h-full shadow-2xl animate-slideInSlow" (click)="$event.stopPropagation()">
+        <app-details-homestay [dataDetails]="homestayDetails"
+            (emitCloseDetails)="handleCloseDetails($event)"></app-details-homestay>
+    </div>
 </div>
