@@ -6,6 +6,7 @@ import { Login } from "./login/login";
 import { Register } from "./register/register";
 import { ReactiveFormsModule } from '@angular/forms';
 import { Opt } from "./opt/opt";
+import { ForgotPassword } from "./forgot-password/forgot-password";
 
 
 const routes: Routes = [
@@ -15,13 +16,14 @@ const routes: Routes = [
 @NgModule({
     declarations: [AuthComponent],
     imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        ReactiveFormsModule,
-        Login,
-        Register,
-        Opt
-    ],
+    CommonModule,
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    Login,
+    Register,
+    Opt,
+    ForgotPassword
+],
     exports: []
 })
 

@@ -64,6 +64,7 @@ export class DetailsHomestay {
   menuTab = [
     { id: 1, name: 'Tổng quan', type: 'overview' },
     { id: 2, name: 'Tiện nghi', type: 'facilities' },
+    {id:3,name:'Đánh giá',type:'comment'}
   ]
 
   ngOnInit() {

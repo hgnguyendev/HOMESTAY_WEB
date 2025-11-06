@@ -91,7 +91,7 @@ export class Homestay {
 
   getStatusClasses(status: string): string {
     const baseClasses = "px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all duration-300";
-    if (status === 'booked') {
+    if (status === 'not_booked') {
       return `${baseClasses} bg-green-50 text-green-700 border border-green-200`;
     } else {
       return `${baseClasses} bg-red-50 text-red-700 border border-red-200`;
@@ -99,7 +99,7 @@ export class Homestay {
   }
 
   getStatusDotClasses(status: string): string {
-    if (status === 'booked') {
+    if (status === 'not_booked') {
       return "bg-green-500";
     } else {
       return "bg-red-500";

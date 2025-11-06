@@ -9,14 +9,19 @@
     </div>
     <div class="col-span-6">
         <div *ngIf="step === 'login'">
-            <app-login (emitRegister)="goToRegister()"></app-login>
+            <app-login (emitRegister)="goToRegister()" (emitForgotPassWord)="handleForgotPassword($event)"></app-login>
         </div>
         <div *ngIf="step === 'register'">
             <app-register (emitLogin)="goToLogin()" (emitOtp)="goToOtp($event)"></app-register>
         </div>
         <!-- Màn OTP -->
-        <div *ngIf ="step === 'otp'">
-            <app-opt (emitBack)="goToOtp()" [dataRegister]="dataRegister" ></app-opt>
+        <div *ngIf="step === 'otp'">
+            <app-opt (emitBack)="goToOtp()" [dataOtpForget]="dataOtp" [dataRegister]="dataRegister"></app-opt>
+        </div>
+
+        <div *ngIf="step === 'forgotPassword'">
+            <app-forgot-password (emitDataOtp)="dataOtp = $event" (emitNavigatorLogin)="step = $event"
+                (emitOtp)="step = $event"></app-forgot-password>
         </div>
     </div>
 </div>

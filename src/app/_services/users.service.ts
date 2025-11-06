@@ -38,8 +38,8 @@ export class UserService {
         return this._baseService.post(`${AppConfig.settings.apiEndpoint}/users/auth/confirm-email`, { email, otp });
     }
 
-    async editUser(data:any){
-        return this._baseService.put(`${AppConfig.settings.apiEndpoint}/users/edit-user`,data);
+    async editUser(data: any) {
+        return this._baseService.put(`${AppConfig.settings.apiEndpoint}/users/edit-user`, data);
     }
 
     async changePassWord(oldPassWord: string, newPassWord: string) {
@@ -132,6 +132,16 @@ export class UserService {
             throw new Error(error.message);
         }
     }
+
+    async sendPassWordReset(email: string) {
+        try {
+            const result = await this._angularFireAuth.sendPasswordResetEmail( email)
+            return result;
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
     async logout() {
         try {
             const result = await this._angularFireAuth.signOut();

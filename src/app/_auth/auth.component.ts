@@ -6,16 +6,17 @@ import { Component } from "@angular/core";
 })
 
 export class AuthComponent {
-    step: 'login' | 'register' | 'otp' = 'login';
+    step: 'login' | 'register' | 'otp' | 'forgotPassword' = 'login';
     dataRegister: { email: string, password: string } = {
         email: '',
         password: ''
     };
+    dataOtp: any;
 
     images = [
         { id: 1, img: '../../assets/image/homestay1.jpeg' },
         { id: 2, img: '../../assets/image/homestay2.jpeg' },
-        { id: 3, img: '../../assets/image/homestay3.jpeg' }
+        { id: 3, img: '../../assets/image/homestay-dep5.webp' }
     ]
     currentIndex = 0;
     intervalId: any;
@@ -56,6 +57,9 @@ export class AuthComponent {
     goToOtp(data?: any) {
         this.step = 'otp';
         this.dataRegister = { email: data.email.value, password: data.password.value };
+    }
+    handleForgotPassword(item: any) {
+        this.step = item;
     }
 
 }

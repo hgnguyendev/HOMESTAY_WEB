@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, NgZone, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../_services/users.service';
+import { OtpForgotService } from '../../_services/otp-forgot-password.service';
 
 @Component({
   selector: 'app-opt',
@@ -12,6 +13,7 @@ import { UserService } from '../../_services/users.service';
 export class Opt {
   otpArray: string[] = new Array(6).fill('');
   @Input() dataRegister: any;
+  @Input() dataOtpForget: any;
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
   timeLeft: number = 60;
@@ -21,7 +23,8 @@ export class Opt {
 
   constructor(
     private ngZone: NgZone,
-    private _userService: UserService
+    private _userService: UserService,
+    private _checkOtpForgotPassword: OtpForgotService
 
   ) { }
 
@@ -65,9 +68,19 @@ export class Opt {
 
   async onSubmit() {
     if (this.otpForm.valid) {
-      const otpCode = Object.values(this.otpForm.value).join('');
-      await this._userService.createUserFirebase(this.dataRegister.email, this.dataRegister.password);
-
+      // await this._userService.createUserFirebase(this.dataRegister.email, this.dataRegister.password);
+      try {
+        const otpCode = Object.values(this.otpForm.value).join('');
+        const data = {
+          _id: this.dataOtpForget._id,
+          email: this.dataOtpForget.email,
+          code: otpCode
+        }
+        const result = await this._checkOtpForgotPassword.checkOtp(data);
+        await this._userService.sendPassWordReset(this.dataOtpForget.email);
+      } catch (error: any) {
+        alert('Otp không đúng')
+      }
 
       this.resetOtpFields()
     }

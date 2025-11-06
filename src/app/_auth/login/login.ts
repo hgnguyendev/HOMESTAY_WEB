@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Login {
   @Output() emitRegister = new EventEmitter<void>();
+  @Output() emitForgotPassWord = new EventEmitter<string>();
   loginForm: FormGroup;
   hidePassword = true;
   rememberMe = false;
@@ -68,9 +69,7 @@ export class Login {
   }
 
   forgotPassword(): void {
-    console.log('Forgot password clicked');
-    // Chuyển hướng đến trang quên mật khẩu
-    this.router.navigate(['/forgot-password']);
+    this.emitForgotPassWord.emit('forgotPassword')
   }
 
   get email() { return this.loginForm.get('email'); }
