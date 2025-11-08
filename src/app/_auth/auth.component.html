@@ -14,9 +14,15 @@
         <div *ngIf="step === 'register'">
             <app-register (emitLogin)="goToLogin()" (emitOtp)="goToOtp($event)"></app-register>
         </div>
-        <!-- Màn OTP -->
-        <div *ngIf="step === 'otp'">
-            <app-opt (emitBack)="goToOtp()" [dataOtpForget]="dataOtp" [dataRegister]="dataRegister"></app-opt>
+        <!-- Màn OTP khi quên mật khẩu  -->
+        <div *ngIf="step === 'otp-forgotPassWord'">
+            <app-opt  [dataOtpForget]="dataOtp" (emitOtpSend)="handleOtpForgotPassword($event)"
+               ></app-opt>
+        </div>
+
+        <div *ngIf="step === 'otp-register'">
+            <app-opt (emitBack)="goToOtp()" [dataOtpForget]="dataOtp" (emitOtpSend)="handleRegister($event)"
+                [dataRegister]="dataRegister"></app-opt>
         </div>
 
         <div *ngIf="step === 'forgotPassword'">

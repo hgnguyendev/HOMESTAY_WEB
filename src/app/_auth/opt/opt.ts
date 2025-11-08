@@ -14,6 +14,8 @@ export class Opt {
   otpArray: string[] = new Array(6).fill('');
   @Input() dataRegister: any;
   @Input() dataOtpForget: any;
+
+  @Output() emitOtpSend = new EventEmitter<any>();
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
   timeLeft: number = 60;
@@ -71,13 +73,14 @@ export class Opt {
       // await this._userService.createUserFirebase(this.dataRegister.email, this.dataRegister.password);
       try {
         const otpCode = Object.values(this.otpForm.value).join('');
-        const data = {
-          _id: this.dataOtpForget._id,
-          email: this.dataOtpForget.email,
-          code: otpCode
-        }
-        const result = await this._checkOtpForgotPassword.checkOtp(data);
-        await this._userService.sendPassWordReset(this.dataOtpForget.email);
+        // const data = {
+        //   _id: this.dataOtpForget._id,
+        //   email: this.dataOtpForget.email,
+        //   code: otpCode
+        // }
+        // const result = await this._checkOtpForgotPassword.checkOtp(data);
+        // await this._userService.sendPassWordReset(this.dataOtpForget.email);
+        this.emitOtpSend.emit(otpCode);
       } catch (error: any) {
         alert('Otp không đúng')
       }

@@ -31,6 +31,7 @@ export class Register {
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('[- +()0-9]+')]],
+      address: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
       acceptTerms: [false, [Validators.requiredTrue]]
@@ -75,6 +76,7 @@ export class Register {
   get lastName() { return this.registerForm.get('lastName'); }
   get email() { return this.registerForm.get('email'); }
   get phone() { return this.registerForm.get('phone'); }
+  get address() { return this.registerForm.get('address') }
   get password() { return this.registerForm.get('password'); }
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
   get acceptTerms() { return this.registerForm.get('acceptTerms'); }
@@ -87,33 +89,23 @@ export class Register {
     if (this.registerForm.valid) {
       this.markFormGroupTouched();
     }
-
     const emailValue = this.email?.value;
     const passwordValue = this.password?.value;
     const dataemit = {
+      name: this.firstName,
       email: this.email,
-      password: this.password
+      password: this.password,
+      address: this.address,
+      phone: this.phone,
+      step: 'otp-register'
     }
-
-
-
     try {
       const data = {
         email: this.email?.value
       };
-      // await this._otpService.createOtp(data);
-      // this._swalService.success(`Chúng tôi đã gửi mã OTP đến Email ${this.email}`);
-      // this.emitOtp.emit(dataemit);
-      const result = await this._userService.createUserFirebase(emailValue, passwordValue);
-      const dataCreateUser = {
-        _id: result.user?.uid || '',
-        name: this.firstName?.value,
-        phone: this.phone?.value,
-        email: emailValue,
-        role: 'user'
-      }
-      await this._userService.createUser(dataCreateUser);
-      this._router.navigateByUrl('/main').then();
+      await this._otpService.createOtp(data);
+      this._swalService.success(`Chúng tôi đã gửi mã OTP đến Email ${this.email}`);
+      this.emitOtp.emit(dataemit);
     } catch (error: any) {
     }
   }

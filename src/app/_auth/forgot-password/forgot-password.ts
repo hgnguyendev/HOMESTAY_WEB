@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ɵInternalFormsSharedModule, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OtpForgotService } from '../../_services/otp-forgot-password.service';
 import { LoadingPage } from "../../_shared/components/loading-page/loading-page";
+import { SwalService } from '../../_services/swal.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +19,8 @@ export class ForgotPassword {
   @Output() emitDataOtp = new EventEmitter<any>();
   constructor(
     private fb: FormBuilder,
-    private _otpForgotPasswordService: OtpForgotService
+    private _otpForgotPasswordService: OtpForgotService,
+    private _swalService: SwalService
   ) { }
 
   ngOnInit() {
@@ -43,8 +45,10 @@ export class ForgotPassword {
       const result = await this._otpForgotPasswordService.RenderOtpForgotPassword(data);
       console.log("result otp", result);
       this.emitDataOtp.emit(result);
-      this.emitOtp.emit('otp');
+      this.emitOtp.emit('otp-forgotPassWord');
     } catch (error: any) {
+      const message = error?.messageList?.[0]?.text || 'Có lỗi xảy ra';
+      this._swalService.error(message);
 
     }
   }

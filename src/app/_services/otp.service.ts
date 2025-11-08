@@ -15,4 +15,8 @@ export class OtpService {
         return await this._baseService.post(`${AppConfig.settings.apiEndpoint}/otp/create-otp`, data);
     }
 
+    async checkOtp(data: any) {
+        return this._baseService.post(`${AppConfig.settings.apiEndpoint}/otp/check-otp`, data);
+    }
+
 }
