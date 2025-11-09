@@ -1,0 +1,98 @@
+<div class="mt-6">
+    <!-- Tổng đánh giá -->
+    <div class="bg-white border border-gray-300 rounded-lg p-4 mb-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <i class="bi bi-star-fill text-2xl text-yellow-500"></i>
+                    <span class="text-2xl font-semibold">{{ dataHomestay.rating }}</span>
+                </div>
+                <span class="text-gray-500">/ 5</span>
+            </div>
+            <div class="text-right">
+                <p class="text-lg font-bold">{{ comments.length }}</p>
+                <p class="text-gray-500 text-sm">đánh giá</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form đánh giá -->
+    <div class="bg-white border border-gray-300 rounded-lg p-4 mb-6 cursor-pointer" (click)="handleIsComments()">
+        <ng-container *ngIf="!isComments">
+            <p class="text-gray-400">Viết đánh giá của bạn...</p>
+        </ng-container>
+
+        <ng-container *ngIf="isComments">
+            <textarea class="w-full h-32 resize-none bg-gray-100 rounded-md px-3 py-2 mb-4" [(ngModel)]="comment"
+                placeholder="Chia sẻ kinh nghiệm của bạn"></textarea>
+
+            <div class="flex items-center mb-4">
+                <ng-container *ngFor="let star of stars; let idx = index">
+                    <span class="cursor-pointer text-3xl transition-colors duration-200"
+                        [class.text-yellow-400]="isFilled(idx)" [class.text-gray-300]="!isFilled(idx)"
+                        (click)="onStarClick(idx)" (mouseenter)="onStarHover(idx)" (mouseleave)="onStarLeave()">★</span>
+                </ng-container>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+                <div *ngFor="let img of previewImages; let i = index"
+                    class="relative w-24 h-24 border rounded-md overflow-hidden">
+                    <img [src]="img.url" alt="preview" class="w-full h-full object-cover" />
+                    <button (click)="removeImage(i)"
+                        class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600">
+                        &times;
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3">
+                <label
+                    class="flex items-center gap-2 border border-gray-300 bg-white px-3 py-2 rounded-md cursor-pointer">
+                    <i class="bi bi-upload text-gray-600"></i>
+                    <span class="text-gray-600 text-sm">Ảnh</span>
+                    <input type="file" multiple accept="image/*"
+                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        (click)="$event.stopPropagation()" (change)="handleSelected($event)" />
+                </label>
+
+                <button class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
+                    (click)="handleCancelComments(); $event.stopPropagation()">
+                    Huỷ
+                </button>
+                <button class="px-4 py-2 rounded-md bg-purple-600 text-white hover:bg-purple-700"
+                    (click)="handleSendComments()">
+                    Gửi
+                </button>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Danh sách đánh giá -->
+    <h5 class="text-gray-700 font-semibold mb-4 text-lg">Tất cả các đánh giá</h5>
+    <div *ngFor="let item of comments" class="bg-white rounded-lg shadow-sm p-5 mb-5 border border-gray-200">
+        <div class="flex justify-between items-center mb-3">
+            <p class="font-medium text-gray-800">{{ item.name }}</p>
+            <p class="text-gray-400 text-sm">{{ item.createdAt | date:'mediumDate' }}</p>
+        </div>
+
+        <div class="flex items-center mb-3">
+            <ng-container *ngFor="let i of [].constructor(5); let idx = index">
+                <svg *ngIf="idx < item.rating" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 ... (Path truncated) ..."></path>
+                </svg>
+                <svg *ngIf="idx >= item.rating" class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 ... (Path truncated) ..."></path>
+                </svg>
+            </ng-container>
+        </div>
+
+        <p class="text-gray-700 mb-4">{{ item.comment }}</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            <div *ngFor="let image of item.images"
+                class="w-full h-24 rounded-md overflow-hidden bg-gray-100 hover:scale-105 transition-transform duration-200">
+                <img [src]="image" class="w-full h-full object-cover" />
+            </div>
+        </div>
+    </div>
+</div>

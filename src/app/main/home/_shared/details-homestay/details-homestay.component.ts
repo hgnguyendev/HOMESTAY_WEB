@@ -12,6 +12,7 @@ import { PaymentService } from '../../../../_services/payment.service';
 })
 export class DetailsHomestay {
   @Input() dataDetails: any;
+  
   checkInDate: string = '';
   checkOutDate: string = '';
   totalPrice: number = 0

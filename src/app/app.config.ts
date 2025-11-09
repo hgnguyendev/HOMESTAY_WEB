@@ -19,6 +19,8 @@ import { UserService } from './_services/users.service';
 import { initializeAppGlobal } from './app';
 import { routes } from './app.routes';
 import { AuthGuard } from './_guards/auth-guard';
+import { UploadService } from './_services/upload.service';
+import { CommentsService } from './_services/comments.service';
 
 const canUseFCM = () => {
   return typeof window !== 'undefined'
@@ -87,6 +89,8 @@ export const appConfig: ApplicationConfig = {
     UserService,
     SwalService,
     AuthGuard,
+    UploadService,
+    CommentsService,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeAppGlobal,
