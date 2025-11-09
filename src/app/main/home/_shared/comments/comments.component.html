@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-end gap-3">
+            <div class="flex items-center justify-between gap-3">
                 <div class="w-20">
                     <label
                         class="flex items-center gap-2 border border-gray-300 bg-white px-3 py-2 rounded-md cursor-pointer">
@@ -58,15 +58,17 @@
                             (click)="$event.stopPropagation()" (change)="handleSelected($event)" />
                     </label>
                 </div>
-
-                <button class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    (click)="handleCancelComments(); $event.stopPropagation()">
-                    Huỷ
-                </button>
-                <button class="px-4 py-2 rounded-md bg-purple-600 text-white! hover:bg-purple-700"
-                    (click)="handleSendComments()">
-                    Gửi
-                </button>
+                
+                <div class="flex items-center gap-2">
+                    <button class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
+                        (click)="handleCancelComments(); $event.stopPropagation()">
+                        Huỷ
+                    </button>
+                    <button class="px-4 py-2 rounded-md bg-purple-600 text-white! hover:bg-purple-700"
+                        (click)="handleSendComments();$event.stopPropagation()">
+                        Gửi
+                    </button>
+                </div>
             </div>
         </ng-container>
     </div>
