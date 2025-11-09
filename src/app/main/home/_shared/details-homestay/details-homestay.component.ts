@@ -12,7 +12,7 @@ import { PaymentService } from '../../../../_services/payment.service';
 })
 export class DetailsHomestay {
   @Input() dataDetails: any;
-  
+
   checkInDate: string = '';
   checkOutDate: string = '';
   totalPrice: number = 0
@@ -65,7 +65,7 @@ export class DetailsHomestay {
   menuTab = [
     { id: 1, name: 'Tổng quan', type: 'overview' },
     { id: 2, name: 'Tiện nghi', type: 'facilities' },
-    {id:3,name:'Đánh giá',type:'comment'}
+    { id: 3, name: 'Đánh giá', type: 'comment' }
   ]
 
   ngOnInit() {
