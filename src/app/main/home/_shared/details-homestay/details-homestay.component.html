@@ -74,76 +74,67 @@
             <div class="">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Đặt Phòng Khách Sạn</h2>
 
-                <form name="bookingForm" novalidate>
-                    <div class="mb-4 flex items-center justify-between">
-                        <div>
-                            <p><span class="text-xl font-bold">{{ dataDetails.price |
-                                    currency:'VND':'symbol':'1.0-0':'vi-VN' }}</span>/<span>đêm</span></p>
+                <form #bookingForm="ngForm" (ngSubmit)="handleBookingHomestay(bookingForm)" novalidate>
 
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-1">
-                                <i class="bi bi-star-fill text-yellow-400"></i>
-                                <p style="margin-bottom: 0;">{{dataDetails.rating}}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ngày đặt -->
+                    <!-- CHECK IN -->
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-medium mb-2" for="checkInDate">
-                            Ngày nhận phòng
-                        </label>
-                        <input id="checkInDate" type="date" (change)="updateTotalPrice()" [(ngModel)]="checkInDate"
-                            name="checkInDate"
-                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Ngày nhận phòng</label>
+                        <input type="date" name="checkInDate" [(ngModel)]="checkInDate" required
+                            (change)="validateDates()" #checkIn="ngModel" class="w-full border rounded-lg px-3 py-2" />
+
+                        <p class="text-red-500 text-sm" *ngIf="checkIn.invalid && bookingForm.submitted">
+                            Vui lòng chọn ngày nhận phòng
+                        </p>
                     </div>
 
-                    <!-- Ngày trả -->
+                    <!-- CHECK OUT -->
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-medium mb-2" for="checkOutDate">
-                            Ngày trả phòng
-                        </label>
-                        <input id="checkOutDate" type="date" (change)="updateTotalPrice()" [(ngModel)]="checkOutDate"
-                            name="checkOutDate"
-                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Ngày trả phòng</label>
+                        <input type="date" name="checkOutDate" [(ngModel)]="checkOutDate" required
+                            (change)="validateDates()" #checkOut="ngModel" class="w-full border rounded-lg px-3 py-2" />
+
+                        <p class="text-red-500 text-sm" *ngIf="checkOut.invalid && bookingForm.submitted">
+                            Vui lòng chọn ngày trả phòng
+                        </p>
+
+                        <p class="text-red-500 text-sm" *ngIf="dateInvalid">
+                            Ngày trả phòng phải lớn hơn ngày nhận phòng
+                        </p>
                     </div>
 
-                    <!-- Số lượng người -->
+                    <!-- GUESTS -->
                     <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-medium mb-2" for="guests">
-                            Số lượng người
-                        </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="bi bi-people text-gray-600"></i>
-                            </div>
-                            <input id="guests" type="number" [(ngModel)]="guests" name="guests"
-                                class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Số người" min="1" max="10" required>
-                        </div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Số lượng người</label>
+                        <input type="number" name="guests" [(ngModel)]="guests" min="1" required #guestsCtrl="ngModel"
+                            class="w-full border rounded-lg px-3 py-2" />
+
+                        <p class="text-red-500 text-sm" *ngIf="guestsCtrl.invalid && bookingForm.submitted">
+                            Số lượng người phải từ 1 trở lên
+                        </p>
                     </div>
 
-                    <!-- Tổng cộng -->
+                    <!-- TOTAL -->
                     <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                        <div class="text-sm text-gray-500 mt-1">
-                            {{totalNights()}} đêm x {{dataDetails.price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}
+                        <div class="text-sm text-gray-500">
+                            {{ totalNights() }} đêm x {{ dataDetails.price | currency:'VND':'symbol':'1.0-0':'vi-VN' }}
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-gray-700 font-medium">Tổng cộng:</span>
-                            <span class="text-2xl font-bold text-blue-600"> {{ getTotalPrice() |
-                                currency:'VND':'symbol':'1.0-0':'vi-VN' }}</span>
+                            <span class="text-2xl font-bold text-blue-600">
+                                {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0':'vi-VN' }}
+                            </span>
                         </div>
-
                     </div>
 
-                    <!-- Nút đặt phòng -->
-                    <button type="submit" ng-click="submitBooking()" ng-disabled="bookingForm.$invalid"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white! font-medium py-3 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:bg-blue-300 disabled:cursor-not-allowed cursor-pointer"
-                        (click)="handleBookingHomestay()">
-                        <i class="fas fa-check-circle mr-2"></i>Xác nhận đặt phòng
+                    <!-- SUBMIT -->
+                    <button type="submit" [disabled]="bookingForm.invalid || dateInvalid" class="w-full bg-blue-600 hover:bg-blue-700 text-white! font-medium py-3 px-4 rounded-lg
+                   disabled:bg-gray-300 disabled:cursor-not-allowed cursor-pointer">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Xác nhận đặt phòng
                     </button>
+
                 </form>
+
             </div>
 
         </div>

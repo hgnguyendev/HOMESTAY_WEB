@@ -21,6 +21,7 @@ export class DetailsHomestay {
   user_name: string = '';
   user_email: string = '';
   user_phone: string = '';
+  dateInvalid: boolean = false;
 
   @Output() emitCloseDetails = new EventEmitter<null>();
 
@@ -31,6 +32,19 @@ export class DetailsHomestay {
     private _homestayBookedService: HomestayBookedService,
     private _payment: PaymentService
   ) { }
+
+  validateDates() {
+    if (!this.checkInDate || !this.checkOutDate) {
+      this.dateInvalid = false;
+      return;
+    }
+
+    const start = new Date(this.checkInDate);
+    const end = new Date(this.checkOutDate);
+
+    this.dateInvalid = end <= start;
+    this.updateTotalPrice();
+  }
 
   totalNights(): number {
     if (!this.checkInDate || !this.checkOutDate) return 0;
@@ -79,18 +93,16 @@ export class DetailsHomestay {
     }
   }
 
-  async handleBookingHomestay() {
-    try {
-      // const payload = {
-      //   homestay_id: this.dataDetails._id,
-      //   roomName: this.dataDetails.roomName,
-      //   check_in_date: new Date(this.checkInDate),
-      //   check_out_date: new Date(this.checkOutDate),
-      //   total_price: this.totalPrice,
-      //   total_customer: this.guests
-      // }
+  async handleBookingHomestay(form: any) {
+    form.control.markAllAsTouched();
 
-      // await this._homestayBookedService.createHomestayBooked(payload);
+    if (form.invalid || this.dateInvalid) {
+      this._swalService.error('Vui lòng kiểm tra lại thông tin đặt phòng');
+      return;
+    }
+
+    try {
+
       const dataPayload = {
         order_id: this.dataDetails._id,
         amount: this.getTotalPrice(),
@@ -100,14 +112,16 @@ export class DetailsHomestay {
         check_out_date: new Date(this.checkOutDate),
         total_price: this.totalPrice,
         total_customer: this.guests
-      }
+      };
+
       const res = await this._payment.createPayment(dataPayload);
-      console.log("create payment", res);
       window.location.href = res;
-    } catch (error: any) {
+
+    } catch (error) {
       this._swalService.error('Đặt phòng homestay chưa thành công');
     }
   }
+
 
   handleCloseDetails() {
     this.emitCloseDetails.emit(null);

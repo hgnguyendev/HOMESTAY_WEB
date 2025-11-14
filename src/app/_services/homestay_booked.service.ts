@@ -13,4 +13,8 @@ export class HomestayBookedService {
         return this._baseService.post(`${AppConfig.settings.apiEndpoint}/homestay-booking/create-booked`, data);
     }
 
+    updateBookedPayment(txn_ref: string,data:any) {
+        return this._baseService.put(`${AppConfig.settings.apiEndpoint}/homestay-booking/booked-payment/${txn_ref}`,data);
+    }
+
 }
