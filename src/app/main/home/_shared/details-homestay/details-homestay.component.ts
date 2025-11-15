@@ -125,8 +125,11 @@ export class DetailsHomestay {
         check_out_date: new Date(this.checkOutDate),
         total_price: this.totalPrice,
         total_customer: this.guests,
-        image:this.dataDetails.images
+        images: this.dataDetails.images,
+        address: this.dataDetails.address
       };
+
+      console.log(dataPayload)
 
       const res = await this._payment.createPayment(dataPayload);
       window.location.href = res;

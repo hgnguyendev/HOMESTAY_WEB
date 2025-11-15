@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { HomestayBooked } from "./homestay-booked.component";
 import { RouterModule, Routes } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { HomestayBookedSharedModule } from "./shared/homestay-booked-shared.module";
 
 const routes: Routes = [
     {
@@ -14,7 +16,9 @@ const routes: Routes = [
     declarations: [HomestayBooked],
     imports: [
         RouterModule.forChild(routes),
-        CommonModule
+        CommonModule,
+        NzModalModule,
+        HomestayBookedSharedModule
     ],
     exports: []
 })

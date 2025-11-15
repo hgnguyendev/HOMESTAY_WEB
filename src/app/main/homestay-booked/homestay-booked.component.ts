@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HomestayBookedService } from '../../_services/homestay_booked.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ModalDetailsInvoice } from './shared/modal-details-invoice/modal-details-invoice.component';
 
 @Component({
   selector: 'app-homestay-booked',
@@ -9,15 +11,20 @@ import { HomestayBookedService } from '../../_services/homestay_booked.service';
 })
 export class HomestayBooked {
 
-  isActive: string = 'upcoming';
+  isActive: string = 'paid';
+  listHomestayBooked: any;
 
   constructor(
-    private _homestayBookedService: HomestayBookedService
+    private _homestayBookedService: HomestayBookedService,
+    private _nzModal: NzModalService
   ) { }
+
+  ngOnInit() {
+    this.getHomestayBookedByUser();
+  }
 
 
   menuStatusHomestay = [
-    { id: 1, name: 'Sắp tới', type: 'upcoming' },
     { id: 2, name: 'Đã hoàn thành', type: 'paid' },
     { id: 3, name: 'Đã Huỷ', type: 'cancel' }
   ]
@@ -25,7 +32,7 @@ export class HomestayBooked {
   async getHomestayBookedByUser() {
     try {
       const reponse = await this._homestayBookedService.getHomestayByUser();
-      console.log("response", reponse);
+      this.listHomestayBooked = reponse;
     } catch (error: any) {
 
     }
@@ -37,6 +44,14 @@ export class HomestayBooked {
     } catch (error: any) {
 
     }
+  }
+
+  handlleDetailsInvoice(item: any) {
+    this._nzModal.create({
+      nzTitle: 'Thôn tin chi tiết hoá đơn thanh toán phòng của bạn',
+      nzContent: ModalDetailsInvoice,
+      nzFooter: null
+    });
   }
 
 }
