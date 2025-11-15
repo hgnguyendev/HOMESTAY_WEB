@@ -18,7 +18,7 @@ export class Header {
   navigator = [
     { id: 1, name: 'Trang chủ', url: 'home', isActive: false },
     { id: 2, name: 'Homestay', url: 'homestay', isActive: false },
-    { id: 3, name: 'Dịch vụ', url: 'service', isActive: false },
+    { id: 3, name: ' Homestay đã đặt', url: 'booked', isActive: false },
     { id: 4, name: 'Liên hệ', url: 'contact', isActive: false }
   ];
 

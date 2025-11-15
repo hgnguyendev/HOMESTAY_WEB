@@ -1,22 +1,23 @@
 import { NgModule } from "@angular/core";
+import { HomestayBooked } from "./homestay-booked.component";
 import { RouterModule, Routes } from "@angular/router";
-import { ServiceHomestay } from "./service-homestay.component";
 import { CommonModule } from "@angular/common";
 
 const routes: Routes = [
     {
         path: '',
-        component: ServiceHomestay
+        component: HomestayBooked
     }
 ]
 
 @NgModule({
-    declarations: [ServiceHomestay],
+    declarations: [HomestayBooked],
     imports: [
         RouterModule.forChild(routes),
         CommonModule
     ],
-    exports: [],
+    exports: []
 })
 
-export class ServiceHomestayModule { }
+
+export class HomestayBookedModule { }

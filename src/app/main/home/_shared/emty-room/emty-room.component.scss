@@ -1,0 +1,36 @@
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.day {
+    padding: 10px;
+    text-align: center;
+    border-radius: 6px;
+    background: #f4f4f4;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.day.available {
+    background: #e3ffe3;
+}
+
+.day.booked {
+    background: #ffcccc;
+}
+
+.legend .box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+}
+
+.legend .box.available {
+    background: #e3ffe3;
+}
+
+.legend .box.booked {
+    background: #ffcccc;
+}

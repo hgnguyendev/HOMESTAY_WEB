@@ -1,0 +1,25 @@
+<div class="max-w-6xl mx-auto py-6 relative border-b border-gray-300">
+    <div class="flex items-center justify-start gap-6 relative border-b border-gray-300 py-2">
+        <div *ngFor="let item of menuStatusHomestay" class="relative">
+            <button class="text-lg cursor-pointer pb-2 transition-all duration-200"
+                (click)="handleChangeStatusHomestay(item.type)" [ngClass]="{
+          'text-black font-semibold': item.type === isActive,
+          'text-gray-500': item.type !== isActive
+        }">
+                {{item.name}}
+            </button>
+
+            <span *ngIf="item.type === isActive"
+                class="absolute left-0 bottom-[-8px] w-full h-1 bg-black -mb-0.5 rounded"></span>
+        </div>
+    </div>
+
+    <!--List các phòng đã đặt-->
+    <div>
+        <div>
+            <div class="border border-gray-300 rounded-lg p-2">
+
+            </div>
+        </div>
+    </div>
+</div>

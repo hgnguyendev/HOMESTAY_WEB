@@ -23,8 +23,8 @@ const routes: Routes = [
                 loadChildren: () => import('./homestay/homestay.module').then((m) => m.HomestayModule)
             },
             {
-                path: 'service',
-                loadChildren: () => import('./service-homestay/service-homestay.module').then((m) => m.ServiceHomestayModule)
+                path: 'booked',
+                loadChildren: () => import('./homestay-booked/homestay-booked.module').then((m) => m.HomestayBookedModule)
             },
             {
                 path: 'contact',

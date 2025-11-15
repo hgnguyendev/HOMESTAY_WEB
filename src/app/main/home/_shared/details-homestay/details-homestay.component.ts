@@ -22,6 +22,7 @@ export class DetailsHomestay {
   user_email: string = '';
   user_phone: string = '';
   dateInvalid: boolean = false;
+  bookedList: any[] = [];
 
   @Output() emitCloseDetails = new EventEmitter<null>();
 
@@ -32,6 +33,16 @@ export class DetailsHomestay {
     private _homestayBookedService: HomestayBookedService,
     private _payment: PaymentService
   ) { }
+
+
+  async getHomestayBooked() {
+    try {
+      const res = await this._homestayBookedService.getHomestayBooked(this.dataDetails._id);
+      this.bookedList = res;
+    } catch (error: any) {
+
+    }
+  }
 
   validateDates() {
     if (!this.checkInDate || !this.checkOutDate) {
@@ -79,7 +90,8 @@ export class DetailsHomestay {
   menuTab = [
     { id: 1, name: 'Tổng quan', type: 'overview' },
     { id: 2, name: 'Tiện nghi', type: 'facilities' },
-    { id: 3, name: 'Đánh giá', type: 'comment' }
+    { id: 3, name: 'Đánh giá', type: 'comment' },
+    { id: 4, name: 'Lịch phòng còn trống', type: 'emty_room' }
   ]
 
   ngOnInit() {
@@ -91,6 +103,7 @@ export class DetailsHomestay {
     if (this.dataDetails?.images?.length > 0) {
       this.selectedImage = this.dataDetails.images[0];
     }
+    this.getHomestayBooked();
   }
 
   async handleBookingHomestay(form: any) {
@@ -111,14 +124,17 @@ export class DetailsHomestay {
         check_in_date: new Date(this.checkInDate),
         check_out_date: new Date(this.checkOutDate),
         total_price: this.totalPrice,
-        total_customer: this.guests
+        total_customer: this.guests,
+        image:this.dataDetails.images
       };
 
       const res = await this._payment.createPayment(dataPayload);
       window.location.href = res;
 
-    } catch (error) {
-      this._swalService.error('Đặt phòng homestay chưa thành công');
+    } catch (error: any) {
+      const message = error?.messageList?.[0]?.text || 'Có lỗi xảy ra';
+      this._swalService.error(message);
+
     }
   }
 

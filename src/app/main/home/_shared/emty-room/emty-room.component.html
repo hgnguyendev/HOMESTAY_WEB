@@ -1,0 +1,14 @@
+<div class="legend flex items-center gap-4 mb-3 mt-4">
+    <div class="flex items-center gap-2">
+        <span class="box available"></span> Còn phòng
+    </div>
+    <div class="flex items-center gap-2">
+        <span class="box booked"></span> Hết phòng
+    </div>
+</div>
+
+<div class="calendar mt-4">
+    <div class="day" *ngFor="let day of daysInMonth" [class.booked]="isBooked(day)" [class.available]="!isBooked(day)">
+        {{ day | date:'dd' }}
+    </div>
+</div>

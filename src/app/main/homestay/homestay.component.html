@@ -50,7 +50,6 @@
                         <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Hình ảnh</th>
                         <th class="py-4 px-6 text-left font-semibold text-slate-700 text-sm">Tên phòng</th>
                         <th class="py-4 px-6 text-left font-semibold text-slate-700 text-sm">Giá Phòng</th>
-                        <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Trạng thái</th>
                         <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Địa chỉ</th>
                         <th class="py-4 px-6 text-center font-semibold text-slate-700 text-sm">Thao tác</th>
                     </tr>
@@ -59,7 +58,8 @@
                     <tr *ngFor="let item of homestays; let i = index"
                         class="hover:bg-slate-50/80 transition-colors duration-200">
                         <td class="py-4 px-6">
-                            <span class="text-sm font-medium text-slate-900">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</span>
+                            <span class="text-sm font-medium text-slate-900">{{ (currentPage - 1) * itemsPerPage + i + 1
+                                }}</span>
                         </td>
 
                         <td class="py-4 px-6">
@@ -79,17 +79,6 @@
                                 {{ item.price | number }}₫
                             </div>
                             <div class="text-xs text-slate-500">/ đêm</div>
-                        </td>
-
-                        <td class="py-4 px-6">
-                            <div class="flex justify-center">
-                                <span [class]="getStatusClasses(item.status)"
-                                    class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium">
-                                    <span [class]="getStatusDotClasses(item.status)"
-                                        class="w-2 h-2 rounded-full mr-2"></span>
-                                    {{ item.status === 'booked' ? 'Hết phòng' : 'Còn phòng' }}
-                                </span>
-                            </div>
                         </td>
 
                         <td class="py-4 px-6">

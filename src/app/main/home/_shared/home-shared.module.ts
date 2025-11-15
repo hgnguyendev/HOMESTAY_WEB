@@ -9,9 +9,10 @@ import { Overview } from "./overview/overview.component";
 import { Facilities } from "./facilities/facilities.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Comments } from "./comments/comments.component";
+import { EmtyRoom } from "./emty-room/emty-room.component";
 
 @NgModule({
-    declarations: [HomestayOutstanding, ServiceIntroduction, ListServiceIntroduction, CardHomestay, DetailsHomestay, Overview, Facilities, Comments],
+    declarations: [HomestayOutstanding, ServiceIntroduction, ListServiceIntroduction, CardHomestay, EmtyRoom, DetailsHomestay, Overview, Facilities, Comments],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -25,7 +26,8 @@ import { Comments } from "./comments/comments.component";
         DetailsHomestay,
         Overview,
         Facilities,
-        Comments
+        Comments,
+        EmtyRoom
     ]
 })
 

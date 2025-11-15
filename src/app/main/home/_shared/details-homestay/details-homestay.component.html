@@ -66,6 +66,8 @@
                 <app-overview *ngIf="activeTab === 'overview'" [description]="dataDetails.description"></app-overview>
                 <app-facilities *ngIf="activeTab === 'facilities'" [amenities]="dataDetails.amenities"></app-facilities>
                 <app-comments *ngIf="activeTab === 'comment'" [dataHomestay]="dataDetails"></app-comments>
+                <app-emty-room *ngIf="activeTab === 'emty_room'" [bookedList]="bookedList">
+                </app-emty-room>
             </div>
         </div>
 
