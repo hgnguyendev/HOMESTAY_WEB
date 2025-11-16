@@ -23,8 +23,12 @@ export class HomestayBookedService {
     }
 
 
-    getHomestayByUser() {
-        return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay-booking/homestay-booked-user`);
+    getHomestayByUser(params: any) {
+        return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay-booking/homestay-booked-user`, { params });
+    }
+
+    deleteHomestayBooked(id: string) {
+        return this._baseService.delete(`${AppConfig.settings.apiEndpoint}/homestay-booking/homestay-booked-user/${id}`);
     }
 
 }

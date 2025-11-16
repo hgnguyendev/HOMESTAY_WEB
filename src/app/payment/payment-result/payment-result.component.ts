@@ -36,12 +36,16 @@ export class PaymentResult implements OnInit {
       this.resultPayment = params['vnp_TransactionNo']
     });
     if (!this.resultPayment || this.resultPayment === "0") {
-      console.log("Giao dịch thất bại hoặc bằng 0 → Không gọi API");
+      const data = {
+        _id: this.homestay_id,
+        status: 'cancel'
+      }
+      this._homestayBooked.updateBookedPayment(this.txnRef, data)
       return;
     }
-    console.log("homestay_id")
     const data = {
-      _id: this.homestay_id
+      _id: this.homestay_id,
+      status: 'paid'
     }
     await this._homestayBooked.updateBookedPayment(this.txnRef, data);
   }

@@ -126,7 +126,8 @@ export class DetailsHomestay {
         total_price: this.totalPrice,
         total_customer: this.guests,
         images: this.dataDetails.images,
-        address: this.dataDetails.address
+        address: this.dataDetails.address,
+        totalRoom: this.dataDetails.totalRoom
       };
 
       console.log(dataPayload)

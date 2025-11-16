@@ -1,1 +1,147 @@
-<p>modal-details-invoice works!</p>
+<div class="max-w-4xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-gradient-to-r from-[#ffd0e7] via-[#ffd4ab] to-[#fff2a4] text-white p-8 text-center">
+        <div class="flex flex-col justify-center items-center">
+            <div class="bg-green-100 rounded-full h-16 w-16 flex items-center justify-center mb-2!"
+                *ngIf="detailsPayment.status === 'paid'">
+                <i class="bi bi-check-circle text-green-600 text-4xl"></i>
+            </div>
+            <div class="bg-gred-100 rounded-full h-16 w-16 flex items-center justify-center mb-2!"
+                *ngIf="detailsPayment.status === 'cancel'">
+                <i class="bi bi-x-circle-fill text-red-600 text-4xl"></i>
+            </div>
+            <p class="text-green-600 text-sm font-medium" *ngIf="detailsPayment.status === 'paid'"> Thanh toán thành
+                công!</p>
+            <p class="text-red-600 text-sm font-medium" *ngIf="detailsPayment.status === 'cancel'"> Thanh toán thành
+                chưa hoàn thành!</p>
+        </div>
+    </div>
+
+    <div class="bg-amber-50 border-l-4 border-amber-400 mx-6 -mt-6 p-4 rounded-lg shadow-sm">
+        <div class="">
+            <div class="flex flex-col justify-center items-center">
+                <p class="text-gray-600 text-sm">Mã đặt phòng của bạn</p>
+                <p class="text-2xl font-medium text-gray-900">{{detailsPayment.txn_ref}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+                <div class="rounded-xl overflow-hidden shadow-md mb-6">
+                    <img [src]="detailsPayment.images[0]" class="w-full h-64 object-cover">
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2">{{detailsPayment.roomName}}</h2>
+                        <div class="flex items-center text-gray-600">
+                            <i class="bi bi-geo-alt mr-2"></i>
+                            <span>{{detailsPayment.address}}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="">
+                                <i class="bi bi-calendar-check text-gray-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-sm mb-0!">Nhận phòng</p>
+                                <p class="font-semibold mb-0!">{{detailsPayment.check_in_date | date:'dd/MM/yyyy'}}</p>
+                                <p class="text-gray-500 text-sm mb-0!">Từ 14:00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="">
+                                <i class="bi bi-calendar-x text-gray-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-sm mb-0!">Trả phòng</p>
+                                <p class="font-semibold mb-0!">{{detailsPayment.check_out_date | date:'dd/MM/yyyy'}}</p>
+                                <p class="text-gray-500 text-sm mb-0!">Trước 12:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="">
+                                <i class="bi bi-people text-gray-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-sm mb-0!">Số khách</p>
+                                <p class="font-semibold">{{detailsPayment.total_customer}} ngưởi</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="">
+                                <i class="bi bi-house-door text-gray-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 text-sm mb-0!">Số phòng</p>
+                                <p class="font-semibold">{{detailsPayment.totalRoom}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Chi tiết thanh toán</h3>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Giá phòng (7 đêm)</span>
+                            <span class="font-semibold">{{detailsPayment.amount |
+                                currency:'VND':'symbol':'1.0-0'}}</span>
+                        </div>
+
+                        <div class="border-t border-gray-200 pt-3 mt-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 font-semibold">Tổng cộng</span>
+                                <span class="text-xl font-bold text-blue-600">{{detailsPayment.amount |
+                                    currency:'VND':'symbol':'1.0-0'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Thông tin người đặt</h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Họ và tên</p>
+                            <p class="font-semibold">{{detailsPayment.user_name_placer}}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-gray-600 text-sm">Email</p>
+                            <p class="font-semibold">{{detailsPayment.email_user}}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-gray-600 text-sm">Số điện thoại</p>
+                            <p class="font-semibold">{{detailsPayment.phone_placer}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <button class="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-semibold 
+           hover:bg-gray-200 active:scale-[.98] transition-all shadow-sm
+           flex items-center justify-center gap-2 cursor-pointer">
+                <i class="bi bi-house text-xl"></i>
+                Về trang chủ
+            </button>
+
+        </div>
+
+    </div>
+</div>
