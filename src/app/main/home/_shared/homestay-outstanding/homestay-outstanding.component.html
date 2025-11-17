@@ -1,102 +1,79 @@
-<div class="bg-[#f3f3f3] py-10 space-y-10">
-    <div>
-        <h1 class="text-center text-4xl">Homestay Nổi Bật</h1>
-        <p class="text-center text-base text-gray-500">Khám phá những homestay được yêu thích nhất với đánh giá tuyệt
-            vời từ
-            khách hàng</p>
-    </div>
-    <div class="grid grid-cols-3 gap-4 px-8 py-4">
-        <div class="rounded-2xl overflow-hidden bg-white shadow-lg">
-            <div class="w-full h-64 bg-cover bg-center"
-                [style.backgroundImage]="'url(../../../../../assets/image/homestay1.jpeg)'"></div>
+<div class="bg-[#f8f9fa] py-14 space-y-14">
 
-            <div class="px-6 py-6 space-y-10">
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <p>Villa Sân Vườn Đà Lạt</p>
-                        <div class="flex items-center gap-1">
-                            <i class="bi bi-star-fill text-yellow-400"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div>
-                        <i class="bi bi-geo-alt"></i> Đà Lạt Lâm Đồng
-                    </div>
-                    <div><i class="bi bi-people"></i> Tối đa 6 khách</div>
-                    <ul>
-                        <li class="bg-[#ccc] rounded-lg text-black text-[12px] inline-block px-2 py-1">wifi</li>
-                    </ul>
-                    <div>
-                        <span>1đ</span>/đêm
-                    </div>
-                </div>
-                <div class="w-full">
-                    <button class="bg-black text-white px-2 py-2 rounded-lg w-full">Xem chi tiết</button>
-                </div>
-            </div>
-        </div>
-        <div class="rounded-2xl overflow-hidden bg-white shadow-lg">
-            <div class="w-full h-64 bg-cover bg-center"
-                [style.backgroundImage]="'url(../../../../../assets/image/homestay1.jpeg)'"></div>
-
-            <div class="px-6 py-6 space-y-10">
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <p>Villa Sân Vườn Đà Lạt</p>
-                        <div class="flex items-center gap-1">
-                            <i class="bi bi-star-fill text-yellow-400"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div>
-                        <i class="bi bi-geo-alt"></i> Đà Lạt Lâm Đồng
-                    </div>
-                    <div><i class="bi bi-people"></i> Tối đa 6 khách</div>
-                    <ul>
-                        <li class="bg-[#ccc] rounded-lg text-black text-[12px] inline-block px-2 py-1">wifi</li>
-                    </ul>
-                    <div>
-                        <span>1đ</span>/đêm
-                    </div>
-                </div>
-                <div class="w-full">
-                    <button class="bg-black text-white px-2 py-2 rounded-lg w-full">Xem chi tiết</button>
-                </div>
-            </div>
-        </div>
-        <div class="rounded-2xl overflow-hidden bg-white shadow-lg">
-            <div class="w-full h-64 bg-cover bg-center"
-                [style.backgroundImage]="'url(../../../../../assets/image/homestay1.jpeg)'"></div>
-
-            <div class="px-6 py-6 space-y-10">
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <p>Villa Sân Vườn Đà Lạt</p>
-                        <div class="flex items-center gap-1">
-                            <i class="bi bi-star-fill text-yellow-400"></i>
-                            <span>4.8</span>
-                        </div>
-                    </div>
-                    <div>
-                        <i class="bi bi-geo-alt"></i> Đà Lạt Lâm Đồng
-                    </div>
-                    <div><i class="bi bi-people"></i> Tối đa 6 khách</div>
-                    <ul>
-                        <li class="bg-[#ccc] rounded-lg text-black text-[12px] inline-block px-2 py-1">wifi</li>
-                    </ul>
-                    <div>
-                        <span>1đ</span>/đêm
-                    </div>
-                </div>
-                <div class="w-full">
-                    <button class="bg-black text-white px-2 py-2 rounded-lg w-full">Xem chi tiết</button>
-                </div>
-            </div>
-        </div>
+    <!-- Title -->
+    <div class="text-center space-y-3">
+        <h1 class="text-4xl font-bold text-gray-800">Homestay Nổi Bật</h1>
+        <p class="text-base text-gray-500 max-w-xl mx-auto">
+            Khám phá những homestay được yêu thích nhất với đánh giá tuyệt vời từ khách hàng
+        </p>
     </div>
 
-    <div class="text-center">
-        <button class="bg-white border border-gray-300 py-2 px-4 text-[14px] font-semibold rounded-lg text-black">Xem tất cả Homestay</button>
-    </div>
+    <!-- Card Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6 lg:px-20">
 
+        <div *ngFor="let item of homeStayFeatured"
+            class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
+
+            <!-- Fixed Image -->
+            <div class="relative w-full h-60 bg-cover bg-center"
+                [style.backgroundImage]="'url(' + item.images[0] + ')'">
+                <div
+                    class="absolute top-3 right-3 bg-black/60 text-white px-3 py-1 text-sm rounded-full flex items-center gap-1">
+                    <i class="bi bi-star-fill text-yellow-300"></i> {{item.rating}}
+                </div>
+            </div>
+
+            <!-- Content (make it grow to align button) -->
+            <div class="p-6 flex flex-col gap-4 flex-grow">
+
+                <div class="space-y-2">
+                    <p class="text-xl font-semibold text-gray-800 truncate">
+                        {{ item.roomName }}
+                    </p>
+
+                    <div class="flex items-center text-gray-600 gap-1">
+                        <i class="bi bi-geo-alt-fill text-red-500"></i>
+                        <span>{{ item.address }}</span>
+                    </div>
+
+                    <div class="flex items-center text-gray-600 gap-1">
+                        <i class="bi bi-people-fill"></i>
+                        <span>{{ item.total_customer }} khách</span>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <span *ngFor="let amenity of item.amenities"
+                            class="bg-gray-100 text-gray-700 text-[12px] rounded-md px-2 py-1 border border-gray-300">
+                            {{ amenity }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="text-lg font-bold text-green-600">
+                        {{ item.price | number }}₫
+                    </span>
+                    <span class="text-gray-500 text-sm">/ đêm</span>
+                </div>
+            </div>
+
+            <div class="p-6 pt-0">
+                <button
+                    class="w-full bg-black text-white! py-2 rounded-lg font-medium hover:bg-gray-800 transition cursor-pointer" (click)="handleDetail(item)">
+                    Xem chi tiết
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="fixed inset-0 bg-black/40 flex justify-end z-50 backdrop-blur-sm" *ngIf="detail">
+    <div class="bg-white w-[1200px] h-full shadow-2xl animate-slideInSlow" (click)="$event.stopPropagation()">
+        <app-details-homestay [dataDetails]="detail"
+            (emitCloseDetails)="handleCloseDetails($event)"></app-details-homestay>
+    </div>
 </div>

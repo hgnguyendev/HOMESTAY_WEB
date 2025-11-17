@@ -17,4 +17,8 @@ export class HomestayService {
         return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay/search-homestay`, { params: data });
     }
 
+    getHomestayFeatured() {
+        return this._baseService.get(`${AppConfig.settings.apiEndpoint}/homestay/homestay-featured`);
+    }
+
 }
