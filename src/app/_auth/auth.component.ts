@@ -106,7 +106,7 @@ export class AuthComponent {
             }
             await this._userService.createUser(dataUser);
             this._swalService.success('Đăng ký thành công!');
-            this._router.navigate(['/auth']);
+            this.step = 'login';
         } catch (error: any) {
             const errMsg = error?.message || 'Có lỗi xảy ra, vui lòng thử lại.';
             this._swalService.error(errMsg);
@@ -123,8 +123,7 @@ export class AuthComponent {
             const result = await this._checkOtpForgotPassword.checkOtp(data);
             await this._userService.sendPassWordReset(this.dataOtp.email);
             this._swalService.success('Đã yêu cầu đổi mật khẩu thành công . Vui lòng kiểm tra Email nhập vào đường Link mật khẩu mới');
-            this._router.navigate(['/auth']);
-
+            this.step = 'login';
         } catch (error: any) {
 
         }

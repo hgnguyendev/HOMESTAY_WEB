@@ -15,5 +15,10 @@ export const routes: Routes = [
     {
         path: 'payment-result',
         loadChildren: () => import('./payment/payment-result/payment-result.module').then((m) => m.PaymentResultModule)
+    },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
     }
 ];
